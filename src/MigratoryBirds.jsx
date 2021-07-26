@@ -184,7 +184,7 @@ class MigratoryBirds extends Component {
         }
 
         var inputArray = (this.state.inputValue).split(' ');
-        if(testCnt !== inputArray.length) {
+        if(testCnt != inputArray.length) {
             alert('테스트 N의 갯수와 샘플입력 갯수와 다릅니다.')
             return;
         }
@@ -264,7 +264,7 @@ const migratoryBirds = (arr) => {
         result = [...result, v]
     });
     return result.findIndex( (v)=>{ 
-        return v === result.reduce((a,b) => a > b ? a : b) 
+        return v == result.reduce((a,b) => a > b ? a : b) 
     } ) + 1;
 
 }
