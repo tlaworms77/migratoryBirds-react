@@ -2,10 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 // import './index.css';
 import reportWebVitals from './reportWebVitals';
-import MigratoryBirds  from './MigratoryBirds';
+import App  from './App';
 
 ReactDOM.render(
-  <MigratoryBirds/>,
+  <App/>,
   document.getElementById('root')
 );
 

@@ -4,62 +4,51 @@ import SimpleInput from './SimpleInput';
 import DescLi from './DescLi';
 import './algorithm.css';
 
-class MigratoryBirds extends Component {
+class DayOfTheProgrammer extends Component {
 
     state = {
-        title: 'Migratory Birds',
-        desc: 'Given an array of bird sightings where every element represents a bird type id, determine the id of the most frequently sighted type. If more than 1 type has been spotted that maximum amount, return the smallest of their ids.',
+        title: 'Day Of The Programmer',
         content: [
             {
-                header: 'Example',
+                header: '',
                 desc: [
-                        'arr = [1,1,2,2,3]',
-                        'There are two each of types 1 and 2, and one sighting of type 3. Pick the lower of the two types seen twice: type 1.'
-                    ],
+                    "Marie invented a Time Machine and wants to test it by time-traveling to visit Russia on the Day of the Programmer (the 256th day of the year) during a year in the inclusive range from 1700 to 2700.",
+                    "From 1700 to 1917, Russia's official calendar was the Julian calendar; since 1919 they used the Gregorian calendar system. The transition from the Julian to Gregorian calendar system occurred in 1918, when the next day after January 31st was February 14th. This means that in 1918, February 14th was the 32nd day of the year in Russia.",
+                    "In both calendar systems, February is the only month with a variable amount of days; it has 29 days during a leap year, and 28 days during all other years. In the Julian calendar, leap years are divisible by 4; in the Gregorian calendar, leap years are either of the following:"
+                ],
                 lastDesc: [
+                    "Given a year, y, find the date of the 256th day of that year according to the official Russian calendar during that year. Then print it in the format dd.mm.yyyy, where dd is the two-digit day, mm is the two-digit month, and yyyy is y.",
+                    "For example, the given year = 1984. 1984 is divisible by 4, so it is a leap year. The 256th day of a leap year after 1918 is September 12, so the answer is 12.09.1984."
                 ],
                 li: [
-                    
+                    'Divisible by 400.',
+                    'Divisible by 4 and not divisible by 100.'
                 ],
                 sampleTag: []
             },
             {
                 header: 'Function Description',
                 desc: [
-                    'Complete the migratoryBirds function in the editor below.',
+                    'Complete the dayOfProgrammer function in the editor below. It should return a string representing the date of the 256th day of the year given.',
                     'migratoryBirds has the following parameter(s):'
                 ],
                 lastDesc: [
                 ],
                 li: [
-                    'int arr[n]: the types of birds sighted'
-                ],
-                sampleTag: []
-            },
-            {
-                header: 'Returns',
-                desc: [
-                ],
-                lastDesc: [
-                ],
-                li: [
-                    'int: the lowest type id of the most frequently sighted birds'
+                    'year: an integer'
                 ],
                 sampleTag: []
             },
             {
                 header: 'Input Format',
                 desc: [
-                    'The first line contains an integer, n, the size of arr.',
-                    'The second line describes arr as n space-separated integers, each a type number of the bird sighted.'
+                    'A single integer denoting year y.'
                 ],
                 lastDesc: [
                 ],
                 li: [
                 ],
-                sampleTag: [
-                    
-                ]
+                sampleTag: []
             },
             {
                 header: 'Constraints',
@@ -68,8 +57,20 @@ class MigratoryBirds extends Component {
                 lastDesc: [
                 ],
                 li: [
-                    '5 ≤ n ≤ 2 X 100,000',
-                    'It is guaranteed that each type is 1, 2, 3, 4, or 5.'
+                    '1700 \le y \le 2700'
+                ],
+                sampleTag: [
+                    
+                ]
+            },
+            {
+                header: 'Output Format',
+                desc: [
+                    'Print the full date of Day of the Programmer during year y in the format dd.mm.yyyy, where dd is the two-digit day, mm is the two-digit month, and yyyy is y.'
+                ],
+                lastDesc: [
+                ],
+                li: [
                 ],
                 sampleTag: []
             },
@@ -82,8 +83,7 @@ class MigratoryBirds extends Component {
                 li: [
                 ],
                 sampleTag: [
-                    '6',
-                    '1 4 4 4 5 3'
+                    '2017'
                 ]
             },
             {
@@ -95,23 +95,20 @@ class MigratoryBirds extends Component {
                 li: [
                 ],
                 sampleTag: [
-                    '4'
+                    '13.09.2017'
                 ]
             },
             {
                 header: 'Explanation 0',
                 desc: [
-                    'The different types of birds occur in the following frequencies:'
+                    'In the year y = 2017, January has 31 days, February has 28 days, March has 31 days, April has 30 days, May has 31 days, June has 30 days, July has 31 days, and August has 31 days.', 
+                    'When we sum the total number of days in the first eight months, we get 31 + 28 + 31 + 30 + 31 + 30 + 31 + 31 = 243.', 
+                    'Day of the Programmer is the 256th day, so then calculate 256 - 243 = 13 to determine that it falls on day 13 of the 9th month (September).', 
+                    'We then print the full date in the specified format, which is 13.09.2017.'
                 ],
                 lastDesc: [
-                    'The different types of birds occur in the following frequencies:'
                 ],
                 li: [
-                    'Type 1: 1 bird',
-                    'Type 2: 0 birds',
-                    'Type 3: 1 bird',
-                    'Type 4: 3 birds',
-                    'Type 5: 1 bird'
                 ],
                 sampleTag: []
             },
@@ -124,8 +121,7 @@ class MigratoryBirds extends Component {
                 li: [
                 ],
                 sampleTag: [
-                    '11',
-                    '1 2 3 4 5 4 3 2 1 3 4'
+                    '2016'
                 ]
             },
             {
@@ -137,23 +133,55 @@ class MigratoryBirds extends Component {
                 li: [
                 ],
                 sampleTag: [
-                    '3'
+                    '12.09.2016'
                 ]
             },
             {
                 header: 'Explanation 1',
                 desc: [
-                    'The different types of birds occur in the following frequencies:'
+                    'Year y = 2016 is a leap year, so February has 29 days but all the other months have the same number of days as in 2017.', 
+                    'When we sum the total number of days in the first eight months, we get 31 + 29 + 31 + 30 + 31 + 30 + 31 + 31 = 244.', 
+                    'Day of the Programmer is the 256th day, so then calculate 256 - 244 = 12 to determine that it falls on day 12 of the 9th month (September).',
+                    'We then print the full date in the specified format, which is 12.09.2016.'
                 ],
                 lastDesc: [
-                    'Two types have a frequency of 3, and the lower of those is type 3.'
                 ],
                 li: [
-                    'Type 1: 2 bird',
-                    'Type 2: 2 birds',
-                    'Type 3: 3 bird',
-                    'Type 4: 3 birds',
-                    'Type 5: 1 bird'
+                ],
+                sampleTag: []
+            },
+            {
+                header: 'Sample Input 2',
+                desc: [
+                ],
+                lastDesc: [
+                ],
+                li: [
+                ],
+                sampleTag: [
+                    '1800'
+                ]
+            },
+            {
+                header: 'Sample Output 2',
+                desc: [
+                ],
+                lastDesc: [
+                ],
+                li: [
+                ],
+                sampleTag: [
+                    '12.09.1800'
+                ]
+            },
+            {
+                header: 'Explanation 2',
+                desc: [
+                    'Since 1800 is leap year as per Julian calendar. Day lies on 12 September.'
+                ],
+                lastDesc: [
+                ],
+                li: [
                 ],
                 sampleTag: []
             }
@@ -202,27 +230,28 @@ class MigratoryBirds extends Component {
 
     }
 
+
+    isHeaderReturn = (v) => {
+        return v.header ? (<><b>{v.header}</b><br /></>) : <></>;
+    }
+
     render() {
-        const { title, desc, content, testCount, inputValue, resolve, sampleTag } = this.state;
+        const { title, content, testCount, inputValue, resolve, sampleTag } = this.state;
         return (
             <>
                 <div >
                     <div className='headerTitle'>
-                        <h1>
-                            {title}
-                        </h1>
+                        <h1>{title}</h1>
                     </div>
                     <div className='pb-content'>
                         <h2>Problem</h2>
-                        <span>{desc}</span>
-                        <br /><br />
                         <div>
                             {
                                 (content).map((v, i)=>{
                                     return (
                                         <div key={i + 'A'}>
-                                            <b>{v.header}</b><br />
-                                            <DescSpan key={i + 'B'} descList={v.desc}/>
+                                            {this.isHeaderReturn(v)}
+                                            <DescSpan key={i + 'B'} descList={v.desc} />
                                             <ul>
                                                 <DescLi key={'li-' + i} lis={v.li} />
                                             </ul>
@@ -280,4 +309,4 @@ const migratoryBirds = (arr) => {
 
 }
 
-export default MigratoryBirds;
+export default DayOfTheProgrammer;

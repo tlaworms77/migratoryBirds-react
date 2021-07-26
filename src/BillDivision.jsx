@@ -4,18 +4,20 @@ import SimpleInput from './SimpleInput';
 import DescLi from './DescLi';
 import './algorithm.css';
 
-class MigratoryBirds extends Component {
+class BillDivision extends Component {
 
     state = {
-        title: 'Migratory Birds',
-        desc: 'Given an array of bird sightings where every element represents a bird type id, determine the id of the most frequently sighted type. If more than 1 type has been spotted that maximum amount, return the smallest of their ids.',
+        title: 'Bill Division',
         content: [
             {
-                header: 'Example',
+                header: '',
                 desc: [
-                        'arr = [1,1,2,2,3]',
-                        'There are two each of types 1 and 2, and one sighting of type 3. Pick the lower of the two types seen twice: type 1.'
-                    ],
+                    "Two friends Anna and Brian, are deciding how to split the bill at a dinner.", 
+                    "Each will only pay for the items they consume. Brian gets the check and calculates Anna's portion.", 
+                    "You must determine if his calculation is correct.",
+                    "For example, assume the bill has the following prices: bill = [2, 4, 6]. Anna declines to eat item k = bill[2] which costs 6.",
+                    "If Brian calculates the bill correctly, Anna will pay (2 + 4)/2 = 3. If he includes the cost of bill[2], he will calculate (2 + 4 + 6)/2 = 6. In the second case, he should refund 3 to Anna."
+                ],
                 lastDesc: [
                 ],
                 li: [
@@ -26,40 +28,30 @@ class MigratoryBirds extends Component {
             {
                 header: 'Function Description',
                 desc: [
-                    'Complete the migratoryBirds function in the editor below.',
-                    'migratoryBirds has the following parameter(s):'
+                    'Complete the bonAppetit function in the editor below. It should print Bon Appetit if the bill is fairly split. Otherwise, it should print the integer amount of money that Brian owes Anna.',
+                    'bonAppetit has the following parameter(s):'
                 ],
                 lastDesc: [
                 ],
                 li: [
-                    'int arr[n]: the types of birds sighted'
-                ],
-                sampleTag: []
-            },
-            {
-                header: 'Returns',
-                desc: [
-                ],
-                lastDesc: [
-                ],
-                li: [
-                    'int: the lowest type id of the most frequently sighted birds'
+                    "bill: an array of integers representing the cost of each item ordered",
+                    "k: an integer representing the zero-based index of the item Anna doesn't eat",
+                    "b: the amount of money that Anna contributed to the bill"
                 ],
                 sampleTag: []
             },
             {
                 header: 'Input Format',
                 desc: [
-                    'The first line contains an integer, n, the size of arr.',
-                    'The second line describes arr as n space-separated integers, each a type number of the bird sighted.'
+                    "The first line contains two space-separated integers  and , the number of items ordered and the -based index of the item that Anna did not eat.",
+                    "The second line n contains  space-separated integers bill[i] where 0 ≤ i ≤ n.",
+                    "The third line contains an integer, b, the amount of money that Brian charged Anna for her share of the bill."
                 ],
                 lastDesc: [
                 ],
                 li: [
                 ],
-                sampleTag: [
-                    
-                ]
+                sampleTag: []
             },
             {
                 header: 'Constraints',
@@ -68,8 +60,24 @@ class MigratoryBirds extends Component {
                 lastDesc: [
                 ],
                 li: [
-                    '5 ≤ n ≤ 2 X 100,000',
-                    'It is guaranteed that each type is 1, 2, 3, 4, or 5.'
+                    '2 ≤ n ≤ 100,000',
+                    '0 ≤ k＜ n',
+                    '0 ≤ bill[i] ≤ 10,000',
+                    '0 ≤ b ≤ Σ(n-1, i=0)bill[i]',
+                    'The amount of money due Anna will always be an integer'
+                ],
+                sampleTag: [
+                    
+                ]
+            },
+            {
+                header: 'Output Format',
+                desc: [
+                    'If Brian did not overcharge Anna, print Bon Appetit on a new line; otherwise, print the difference (i.e., b[changed] - b[actual]) that Brian must refund to Anna. This will always be an integer.'
+                ],
+                lastDesc: [
+                ],
+                li: [
                 ],
                 sampleTag: []
             },
@@ -82,8 +90,9 @@ class MigratoryBirds extends Component {
                 li: [
                 ],
                 sampleTag: [
-                    '6',
-                    '1 4 4 4 5 3'
+                    '4 1',
+                    '3 10 2 9',
+                    '12'
                 ]
             },
             {
@@ -95,23 +104,20 @@ class MigratoryBirds extends Component {
                 li: [
                 ],
                 sampleTag: [
-                    '4'
+                    '5'
                 ]
             },
             {
                 header: 'Explanation 0',
                 desc: [
-                    'The different types of birds occur in the following frequencies:'
+                    "Anna didn't eat item bill[1] = 10, but she shared the rest of the items with Brian.", 
+                    "The total cost of the shared items is 3 + 2 + 9 = 14 and, split in half, the cost per person is b[actual] = 7.", 
+                    "Brian charged her b[charged] = 12 for her portion of the bill.", 
+                    "We print the amount Anna was overcharged, b[charged] - b[actual] = 12 - 7 = 5, on a new line."
                 ],
                 lastDesc: [
-                    'The different types of birds occur in the following frequencies:'
                 ],
                 li: [
-                    'Type 1: 1 bird',
-                    'Type 2: 0 birds',
-                    'Type 3: 1 bird',
-                    'Type 4: 3 birds',
-                    'Type 5: 1 bird'
                 ],
                 sampleTag: []
             },
@@ -124,8 +130,9 @@ class MigratoryBirds extends Component {
                 li: [
                 ],
                 sampleTag: [
-                    '11',
-                    '1 2 3 4 5 4 3 2 1 3 4'
+                    '4 1',
+                    '3 10 2 9',
+                    '7'
                 ]
             },
             {
@@ -137,23 +144,19 @@ class MigratoryBirds extends Component {
                 li: [
                 ],
                 sampleTag: [
-                    '3'
+                    'Bon Appetit'
                 ]
             },
             {
                 header: 'Explanation 1',
                 desc: [
-                    'The different types of birds occur in the following frequencies:'
+                    "Anna didn't eat item bill[1] = 10, but she shared the rest of the items with Brian.", 
+                    "The total cost of the shared items is 3 + 2 + 9 = 14 and, split in half, the cost per person is b[actual] = 7.", 
+                    "Because b[actual] = b[charged] = 7, we print Bon Appetit on a new line."
                 ],
                 lastDesc: [
-                    'Two types have a frequency of 3, and the lower of those is type 3.'
                 ],
                 li: [
-                    'Type 1: 2 bird',
-                    'Type 2: 2 birds',
-                    'Type 3: 3 bird',
-                    'Type 4: 3 birds',
-                    'Type 5: 1 bird'
                 ],
                 sampleTag: []
             }
@@ -208,14 +211,10 @@ class MigratoryBirds extends Component {
             <>
                 <div >
                     <div className='headerTitle'>
-                        <h1>
-                            {title}
-                        </h1>
+                        <h1>{title}</h1>
                     </div>
                     <div className='pb-content'>
                         <h2>Problem</h2>
-                        <span>{desc}</span>
-                        <br /><br />
                         <div>
                             {
                                 (content).map((v, i)=>{
@@ -280,4 +279,4 @@ const migratoryBirds = (arr) => {
 
 }
 
-export default MigratoryBirds;
+export default BillDivision;
