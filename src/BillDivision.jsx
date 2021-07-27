@@ -188,13 +188,13 @@ class BillDivision extends Component {
     onClickResultBtn = (e) => {
         e.preventDefault();
 
-        var inputA = (this.state.inputA).split(' ');
+        let inputA = (this.state.inputA).split(' ');
         if(inputA.length !== 2) {
             alert('2가지만 입력해라');
             return;
         }
 
-        var eatItems = (this.state.inputItems).split(' ');
+        let eatItems = (this.state.inputItems).split(' ');
         if(parseInt(inputA[0]) !== eatItems.length) {
             alert('위에서 적은 품목수랑 처먹은 품목수랑 다릅니다');
             return;
@@ -268,8 +268,7 @@ const bonAppetit = (inputA, eatItems, money) => {
     commonEats.forEach((v, i) => {
         commonMoney += parseInt(v);
     });
-    
-    return money - (commonMoney/2);
+    return (money - commonMoney)%2 !== 0 ? 'Bon Appetit' : (money - commonMoney)/2;;
 
 }
 
