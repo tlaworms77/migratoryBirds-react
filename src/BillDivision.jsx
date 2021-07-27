@@ -161,44 +161,57 @@ class BillDivision extends Component {
                 sampleTag: []
             }
         ],
-        testCount: '',
-        inputValue: '',
-        resolve: '?'
+        inputA: '',
+        inputItems: '',
+        inputMoney: '',
+        resolve: '0'
     };
 
     onChangeInput = (e) => {
         this.setState({
-            testCount: e.target.value
+            inputA: e.target.value
         });
     }
 
-    onChangeInputArray = (e) => {
+    onChangeInputItems = (e) => {
         this.setState({
-            inputValue: e.target.value //[...this.state.inputArray, e.target.value]
+            inputItems: e.target.value //[...this.state.inputArray, e.target.value]
+        });
+    }
+
+    onChangeInputMoney = (e) => {
+        this.setState({
+            inputMoney: e.target.value //[...this.state.inputArray, e.target.value]
         });
     }
 
     onClickResultBtn = (e) => {
         e.preventDefault();
 
-        let testCnt = this.state.testCount;
-        if(testCnt < 5 || testCnt > 2*100000) {
-            alert('테스트 N의 갯수는 5이상 2X100000이하 입니다.')
+        var inputA = (this.state.inputA).split(' ');
+        if(inputA.length !== 2) {
+            alert('2가지만 입력해라');
             return;
         }
 
-        var inputArray = (this.state.inputValue).split(' ');
-        if(testCnt != inputArray.length) {
-            alert('테스트 N의 갯수와 샘플입력 갯수와 다릅니다.')
+        var eatItems = (this.state.inputItems).split(' ');
+        if(parseInt(inputA[0]) !== eatItems.length) {
+            alert('위에서 적은 품목수랑 처먹은 품목수랑 다릅니다');
             return;
         }
-        
-        this.setState( { resolve: migratoryBirds(inputArray) } );
+
+        let money = this.state.inputMoney;
+        if(money < 1) {
+            alert('돈더 적어라');
+            return;
+        }
+
+        this.setState( { resolve: bonAppetit(inputA, eatItems, money) } );
         
     }
 
     render() {
-        const { title, desc, content, testCount, inputValue, resolve, sampleTag } = this.state;
+        const { title, desc, content, inputA, inputItems, resolve, sampleTag, inputMoney } = this.state;
         return (
             <>
                 <div className={'bodyContents'}>
@@ -231,16 +244,15 @@ class BillDivision extends Component {
                 <div>
                     <h2>Resolve</h2>
                     <form>
-                        <span>※Constraints: 5 ≤ N ≤ 2X10<sup>5</sup></span><br/>
-                        <label htmlFor='testCount'>Input TypeCount : </label>
-                        <input type="number" id='testCount' onChange={this.onChangeInput} value={testCount} />
-                        <br/>
-                        <label htmlFor='inputArr'>Sample Array : </label>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <input id='inputArr' onChange={this.onChangeInputArray} value={inputValue} />
-                        &nbsp;
+                        <label htmlFor='inputA'>[ (품목수) (안나가 안쳐먹은 품목인덱스) ]</label><br/>
+                        <input type="text" id='inputA' onChange={this.onChangeInput} value={inputA} /><br/>
+                        <label htmlFor='inputItems'>[ 쳐먹은 품목들 비용 ]</label><br/>
+                        <input type="text" id='inputItems' onChange={this.onChangeInputItems} value={inputItems} /><br/>
+                        <label htmlFor='inputMoney'>[ 안나가 낸 돈 ]</label><br/>
+                        <input type="number" id='inputMoney' onChange={this.onChangeInputMoney} value={inputMoney} />&nbsp;
                         <button onClick={this.onClickResultBtn}>Result</button>
                         <br/>
-                        <span> Result BirdType: </span><b>Type {resolve}</b>
+                        <span> 삥땅친 금액: </span><b>{resolve} $</b>
                     </form>
                 </div>
             </>
@@ -249,25 +261,15 @@ class BillDivision extends Component {
 
 }
 
-const migratoryBirds = (arr) => {
-    let migratoryBirdsMap = new Map(); 
-    migratoryBirdsMap.set(1, 0); 
-    migratoryBirdsMap.set(2, 0); 
-    migratoryBirdsMap.set(3, 0); 
-    migratoryBirdsMap.set(4, 0); 
-    migratoryBirdsMap.set(5, 0); 
-    arr.filter((v) => { 
-        let intValue = parseInt(v); 
-        migratoryBirdsMap.set(intValue, migratoryBirdsMap.get(intValue)+1); 
-        return v;
-    }); 
-    let result = [];
-    migratoryBirdsMap.forEach((v, k) => {
-        result = [...result, v]
+const bonAppetit = (inputA, eatItems, money) => {
+    let notEatIndex = inputA[1];
+    let commonEats = eatItems.filter(eat => !eat.includes(eatItems[notEatIndex]));
+    let commonMoney = 0;
+    commonEats.forEach((v, i) => {
+        commonMoney += parseInt(v);
     });
-    return result.findIndex( (v)=>{ 
-        return v == result.reduce((a,b) => a > b ? a : b) 
-    } ) + 1;
+    
+    return money - (commonMoney/2);
 
 }
 

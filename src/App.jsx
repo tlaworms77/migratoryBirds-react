@@ -8,7 +8,7 @@ import { faAlignLeft, faArrowCircleLeft, faArrowLeft, faChevronLeft, faChevronRi
 class App extends Component {
 
     state = {
-        problemNumber : 2
+        problemNumber : 3
     }
 
     onTransPrevProblem = (e) => {
