@@ -194,19 +194,11 @@ class MigratoryBirds extends Component {
         
     }
 
-    onTransPrevProblem = (e) => {
-        
-    }
-    
-    onTransNextProblem = (e) => {
-
-    }
-
     render() {
         const { title, desc, content, testCount, inputValue, resolve, sampleTag } = this.state;
         return (
             <>
-                <div >
+                <div className={'bodyContents'}>
                     <div className='headerTitle'>
                         <h1>
                             {title}

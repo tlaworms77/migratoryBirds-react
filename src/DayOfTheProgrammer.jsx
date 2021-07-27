@@ -3,6 +3,8 @@ import DescSpan from './DescSpan';
 import SimpleInput from './SimpleInput';
 import DescLi from './DescLi';
 import './algorithm.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faAlignLeft, faArrowCircleLeft, faArrowLeft, faChevronLeft, faChevronRight, faCoffee, faSearch } from '@fortawesome/free-solid-svg-icons'
 
 class DayOfTheProgrammer extends Component {
 
@@ -186,60 +188,37 @@ class DayOfTheProgrammer extends Component {
                 sampleTag: []
             }
         ],
-        testCount: '',
-        inputValue: '',
-        resolve: '?'
+        testYear: 2021,
+        resolve: 'yyyy-mm-dd'
     };
 
     onChangeInput = (e) => {
         this.setState({
-            testCount: e.target.value
-        });
-    }
-
-    onChangeInputArray = (e) => {
-        this.setState({
-            inputValue: e.target.value //[...this.state.inputArray, e.target.value]
+            testYear: e.target.value
         });
     }
 
     onClickResultBtn = (e) => {
         e.preventDefault();
-
-        let testCnt = this.state.testCount;
-        if(testCnt < 5 || testCnt > 2*100000) {
-            alert('테스트 N의 갯수는 5이상 2X100000이하 입니다.')
-            return;
-        }
-
-        var inputArray = (this.state.inputValue).split(' ');
-        if(testCnt != inputArray.length) {
-            alert('테스트 N의 갯수와 샘플입력 갯수와 다릅니다.')
+        let testYear = parseInt(this.state.testYear);
+        if(testYear < 1700 || testYear > 2700) {
+            alert('제약사항을 읽어보세요.');
             return;
         }
         
-        this.setState( { resolve: migratoryBirds(inputArray) } );
+        this.setState( { resolve: dayOfProgrammer(testYear) } );
         
     }
-
-    onTransPrevProblem = (e) => {
-        
-    }
-    
-    onTransNextProblem = (e) => {
-
-    }
-
 
     isHeaderReturn = (v) => {
         return v.header ? (<><b>{v.header}</b><br /></>) : <></>;
     }
 
     render() {
-        const { title, content, testCount, inputValue, resolve, sampleTag } = this.state;
+        const { title, content, testYear, resolve } = this.state;
         return (
             <>
-                <div >
+                <div className={'bodyContents'}>
                     <div className='headerTitle'>
                         <h1>{title}</h1>
                     </div>
@@ -269,16 +248,12 @@ class DayOfTheProgrammer extends Component {
                 <div>
                     <h2>Resolve</h2>
                     <form>
-                        <span>※Constraints: 5 ≤ N ≤ 2X10<sup>5</sup></span><br/>
-                        <label htmlFor='testCount'>Input TypeCount : </label>
-                        <input type="number" id='testCount' onChange={this.onChangeInput} value={testCount} />
+                        <span>※Constraints: 1700 ≤ y ≤ 2700</span><br/>
+                        <label htmlFor='testYear'>Searching Year : </label>
+                        <input placeholder={2021} minLength={4} maxLength={4} type="number" id='testYear' onChange={this.onChangeInput} value={testYear} />
+                        <button onClick={this.onClickResultBtn}><FontAwesomeIcon icon={faSearch} /></button>
                         <br/>
-                        <label htmlFor='inputArr'>Sample Array : </label>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <input id='inputArr' onChange={this.onChangeInputArray} value={inputValue} />
-                        &nbsp;
-                        <button onClick={this.onClickResultBtn}>Result</button>
-                        <br/>
-                        <span> Result BirdType: </span><b>Type {resolve}</b>
+                        <span> Result The Programmer Day: </span><b>{resolve}</b>
                     </form>
                 </div>
             </>
@@ -287,26 +262,36 @@ class DayOfTheProgrammer extends Component {
 
 }
 
-const migratoryBirds = (arr) => {
-    let migratoryBirdsMap = new Map(); 
-    migratoryBirdsMap.set(1, 0); 
-    migratoryBirdsMap.set(2, 0); 
-    migratoryBirdsMap.set(3, 0); 
-    migratoryBirdsMap.set(4, 0); 
-    migratoryBirdsMap.set(5, 0); 
-    arr.filter((v) => { 
-        let intValue = parseInt(v); 
-        migratoryBirdsMap.set(intValue, migratoryBirdsMap.get(intValue)+1); 
-        return v;
-    }); 
-    let result = [];
-    migratoryBirdsMap.forEach((v, k) => {
-        result = [...result, v]
-    });
-    return result.findIndex( (v)=>{ 
-        return v == result.reduce((a,b) => a > b ? a : b) 
-    } ) + 1;
+/* 
+ * 1700 <= the Gregorian Calender <= 1917 
+ * 1918 <= tye Julian Calender <= ...
+ */
+const dayOfProgrammer = (year) =>  {
+    let resultDate = '26.09.1918'
+    let programmerDay = '.09.' + year + '';
+    if (year < 1918) { 
+        resultDate = isJulianLeafYear(year, programmerDay);
+     } else if (year > 1918) {
+        resultDate = isGregorianLeafYear(year, programmerDay);
+     }
 
+    return resultDate;
+}
+
+/* 1918 <= the Gregorian Calender <= ... */
+const isGregorianLeafYear = (year, programmerDay) => {
+    let isLeafDay = (year % 4 === 0 && year % 100 !== 0 || year % 400 === 0);
+    return getProgrammersDate(isLeafDay, programmerDay);
+}
+
+/* 1700 <= tye Julian Calender <= 1917 */
+const isJulianLeafYear = (year, programmerDay) => {
+    let isLeafDay = (year % 4 === 0);
+    return getProgrammersDate(isLeafDay, programmerDay);
+}
+
+const getProgrammersDate = (isLeafDay, programmerDay) => {
+    return isLeafDay ? '12' + programmerDay : '13' + programmerDay;
 }
 
 export default DayOfTheProgrammer;
