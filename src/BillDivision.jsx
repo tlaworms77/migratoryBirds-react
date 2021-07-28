@@ -268,7 +268,7 @@ const bonAppetit = (inputA, eatItems, money) => {
     commonEats.forEach((v, i) => {
         commonMoney += parseInt(v);
     });
-    return (commonMoney)%2 !== 0 ? 'Bon Appetit' : money - commonMoney/2;
+    return (commonMoney)%2 != 0 ? 'Bon Appetit' : money - commonMoney/2;
 
 }
 
